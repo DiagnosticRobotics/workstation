@@ -12,11 +12,6 @@ while [[ $# -gt 0 ]]; do
       shift # past argument
       shift # past value
       ;;
-    -t|--github-packages-token)
-      GITHUB_PACKAGES_TOKEN="$2"
-      shift # past argument
-      shift # past value
-      ;;
     -x|--exclude)
       IFS=',' read -r -a EXCLUDE <<< "$2"
       shift # past argument
@@ -36,12 +31,11 @@ done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 usage (){
-  echo "Usage: ./install.sh -u|--git-user-name <YOUR-GIT-USER-NAME> -e|--git-email <YOUR-GIT-EMAIL> -t|--github-packages-token <GITHUB-PACKAGES-TOKEN> [-x|--exclude <comma separated string for apps that will not be installed>]"
-  echo "Usage: Github packages token can be fetched from: github.com => settings => developer settings => personal access tokens"
+  echo "Usage: ./install.sh -u|--git-user-name <YOUR-GIT-USER-NAME> -e|--git-email <YOUR-GIT-EMAIL> [-x|--exclude <comma separated string for apps that will not be installed>]"
   echo "Usage: Available excludes: whatsapp,telegram,visual-studio-code,github,gh,notion,ngrok,goland,awscli,gcloud,sublime-text,go,mongo,tunnelblick,openvpn-connect,k8s,bzt,terraform,iterm2"
 }
 
-if [ -z "${GIT_USER_NAME}" ] || [ -z "${GIT_EMAIL}" ] || [ -z "${GITHUB_PACKAGES_TOKEN}" ]; then
+if [ -z "${GIT_USER_NAME}" ] || [ -z "${GIT_EMAIL}" ]; then
   usage
   exit 1
 fi
@@ -109,7 +103,6 @@ install telegram --cask
 # Node
 brew install nvm
 brew install yarn
-echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGES_TOKEN" > ~/.npmrc
 nvm install 16
 echo "export NVM_DIR=\"$HOME/.nvm\"" >> ~/.zshrc
 # This loads nvm
