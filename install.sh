@@ -86,7 +86,6 @@ chmod 755 /usr/local/share/zsh
 chmod 755 /usr/local/share/zsh/site-functions
 
 # Applications
-install notion --cask 
 install iterm2 --cask
 
 # Dev Apps
@@ -95,64 +94,28 @@ echo "export PATH=\"/Applications/WebStorm.app/Contents/MacOS:$PATH\"" >> ~/.zsh
 brew install --cask pycharm
 brew install --cask postman
 brew install --cask datagrip
-install goland --cask 
 install ngrok --cask 
-install github --cask
 
 # Cloud CLIs
 install awscli
-arrayContains EXCLUDE[@] gcloud
-if [[ "$?" == "0" ]]; then
-  brew install --cask google-cloud-sdk
-  gcloud init
-  echo "source \"${BREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc\"" >> ~/.zshrc
-  echo "source \"${BREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc\"" >> ~/.zshrc
-fi
-arrayContains EXCLUDE[@] heroku
-if [[ "$?" == "0" ]]; then
-  brew tap heroku/brew && brew install heroku
-fi
 
 # Text editors
-install atom --cask
 install sublime-text --cask 
 install visual-studio-code --cask
 
 # Communication
-install whatsapp --cask
 install telegram --cask
-brew install --cask slack
-brew install --cask zoom
-
-# Mongo
-arrayContains EXCLUDE[@] mongo
-if [[ "$?" == "0" ]]; then
-  brew install --cask mongodb-compass
-  brew tap mongodb/brew
-  brew install mongodb-database-tools
-fi
 
 # Node
 brew install nvm
 brew install yarn
 echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGES_TOKEN" > ~/.npmrc
-nvm install 12
 nvm install 16
 echo "export NVM_DIR=\"$HOME/.nvm\"" >> ~/.zshrc
 # This loads nvm
 [ -s \"${BREW_PREFIX}/opt/nvm/nvm.sh\" ] && echo "\. \"${BREW_PREFIX}/opt/nvm/nvm.sh\"" >> ~/.zshrc
 # This loads nvm bash_completion
 [ -s \"${BREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm\" ] && echo "\. \"${BREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm\"" >> ~/.zshrc
-
-# go
-arrayContains EXCLUDE[@] go
-if [[ "$?" == "0" ]]; then
-  brew install go
-  zsh $(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-  git config --global url.git@github.com:.insteadOf https://github.com
-  echo "export GOPRIVATE=\"github.com/climacell/*\"" >> ~/.zshrc
-  [[ -s \"\$HOME/.gvm/scripts/gvm\" ]] && echo "source \"\$HOME/.gvm/scripts/gvm\"" >> ~/.zshrc
-fi
 
 # docker
 brew install --cask docker
@@ -171,10 +134,6 @@ git config --global mergetool.keepBackup false
 git config --global diff.tool p4difftool
 git config --global difftool.p4difftool.cmd '/Applications/p4merge.app/Contents/MacOS/p4merge "$LOCAL" "$REMOTE"'
 
-# VPN
-install tunnelblick --cask 
-install openvpn-connect --cask 
-
 # K8s
 arrayContains EXCLUDE[@] k8s
 if [[ "$?" == "0" ]]; then
@@ -187,9 +146,6 @@ fi
 
 #github
 install gh
-
-# SSH
-ssh-keygen -t rsa -b 4096 -C "$GIT_EMAIL"
 
 #Configurations
 # echo "prompt_context() {
@@ -205,23 +161,10 @@ if [[ "$?" != "0" ]]; then
   export EDITOR='subl -w'  
 fi
 
-# Blazemeter
-install bzt
-
-# Folders
-mkdir ~/dev
-
-# terraform
-arrayContains EXCLUDE[@] terraform
-if [[ "$?" == "0" ]]; then
-  brew install warrensbox/tap/tfswitch
-fi
-
 # Rosseta
 softwareupdate --install-rosetta
 
 # Shell
 echo "setopt HIST_IGNORE_SPACE" >> ~/.zshrc
-
 
 echo "Make sure to edit .zshrc with a theme you like"
