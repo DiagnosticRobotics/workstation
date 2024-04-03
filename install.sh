@@ -40,6 +40,7 @@ if [ -z "${GIT_USER_NAME}" ] || [ -z "${GIT_EMAIL}" ]; then
   exit 1
 fi
 
+
 arrayContains (){
   declare -a array=("${!1}")
   local match=$2
@@ -100,6 +101,12 @@ install visual-studio-code --cask
 # Communication
 install telegram --cask
 
+# python
+brew install pyenv
+brew install pyenv-virtualenv
+brew install poetry
+brew install libpq
+
 # Node
 brew install nvm
 brew install yarn
@@ -151,7 +158,7 @@ install gh
 arrayContains EXCLUDE[@] sublime-text
 if [[ "$?" != "0" ]]; then
   echo "# Default editor"
-  export EDITOR='subl -w'  
+  echo "export EDITOR='subl -w'" >> ~/.zshrc 
 fi
 
 # Rosseta
@@ -159,5 +166,8 @@ softwareupdate --install-rosetta
 
 # Shell
 echo "setopt HIST_IGNORE_SPACE" >> ~/.zshrc
+
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 
 echo "Make sure to edit .zshrc with a theme you like"
